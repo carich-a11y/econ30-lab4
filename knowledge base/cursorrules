@@ -1,0 +1,94 @@
+# Knowledge Base Rules
+
+You are managing a personal knowledge base. Your job is to compile raw sources into a structured, interlinked wiki and to answer queries against it.
+
+## Directory structure
+
+- `raw/` — Source documents. **Never modify these.**
+- `wiki/` — Compiled wiki. **You maintain this entirely.**
+- `wiki/index.md` — Master index. **Update this whenever you create or modify any article.**
+- `wiki/concepts/` — Concept articles (one concept per file).
+- `wiki/summaries/` — One summary per source document.
+- `outputs/` — Query results, slide decks, visualizations.
+
+## Article format
+
+Every wiki article must have YAML frontmatter:
+
+```yaml
+---
+title: "Article Title"
+sources:
+  - raw/articles/source-file.md
+  - raw/papers/another-source.pdf
+related:
+  - "[[Related Concept]]"
+  - "[[Another Concept]]"
+last_updated: 2025-01-15
+tags:
+  - topic-tag
+---
+```
+
+### Writing conventions
+
+- Use `[[wiki-style backlinks]]` for cross-references between articles.
+- One concept per article. If an article covers two distinct ideas, split it.
+- Include a `## Sources` section at the bottom linking back to `raw/` files.
+- Write clearly and concisely. Prefer concrete claims over vague summaries.
+- When sources disagree, note the disagreement explicitly.
+- Use lowercase-kebab-case for filenames (e.g., `transformer-architecture.md`).
+
+## Processing new sources
+
+When the user adds files to `raw/`, follow this sequence:
+
+1. **Read** the new source document(s).
+2. **Summarize** each in `wiki/summaries/[source-name].md`.
+3. **Identify concepts** — key ideas, entities, frameworks, findings.
+4. **Create or update** concept articles in `wiki/concepts/`:
+   - If an article exists, integrate new information (don't overwrite).
+   - If it's new, create the article.
+5. **Add backlinks** — update `related` frontmatter in all affected articles.
+6. **Update `wiki/index.md`** — add/update the one-line summary for each new or modified article.
+
+## Index format
+
+`wiki/index.md` is your primary navigation tool. It should contain a one-line summary of every article, grouped by topic:
+
+```markdown
+# Knowledge Base Index
+
+## [Topic Area]
+- [[concept-name]] — One-line summary of what this article covers.
+
+## Summaries
+- [[summary-source-name]] — Summary of [source title] by [author].
+```
+
+## Answering queries
+
+1. Read `wiki/index.md` to identify relevant articles.
+2. Read those articles for detail.
+3. Synthesize an answer from multiple sources.
+4. Cite which wiki articles and raw sources support each claim.
+5. If asked to save, write to `outputs/` and optionally file back into the wiki.
+
+## Health checks
+
+When asked to lint the wiki:
+
+- Find missing or broken backlinks.
+- Identify overlapping concepts that should be merged.
+- Find overly broad concepts that should be split.
+- Check for contradictions between articles.
+- Suggest gaps — concepts referenced but not yet written.
+- Verify `wiki/index.md` is complete and accurate.
+- Write findings to `outputs/health-check-YYYY-MM-DD.md`.
+
+## Rules
+
+- **Never modify `raw/`.**
+- **Always update `wiki/index.md`** after any wiki change.
+- Prefer updating existing articles over creating near-duplicates.
+- When uncertain about categorization, create the article and note the ambiguity.

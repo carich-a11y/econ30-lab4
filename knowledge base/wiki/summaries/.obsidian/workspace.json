@@ -1,0 +1,195 @@
+{
+  "main": {
+    "id": "83d80ec61dfd1905",
+    "type": "split",
+    "children": [
+      {
+        "id": "8968e1c743e2c15c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ed99fe4e974254ea",
+            "type": "leaf",
+            "state": {
+              "type": "bases",
+              "state": {
+                "file": "Untitled 1.base",
+                "viewName": "Table"
+              },
+              "icon": "lucide-table",
+              "title": "Untitled 1"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c0d4c07c13b94bb3",
+    "type": "split",
+    "children": [
+      {
+        "id": "7dec3783c25b7323",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a86afaeb32f958cf",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "4300081d6cc2fa58",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "3680b947ba6658da",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "99967fea959045eb",
+    "type": "split",
+    "children": [
+      {
+        "id": "8a2239b2b8076b7d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2b59288ee6cfcbec",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "summary-correll-getting-job-motherhood-2007.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for summary-correll-getting-job-motherhood-2007"
+            }
+          },
+          {
+            "id": "d4574b09cf2582fa",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "summary-correll-getting-job-motherhood-2007.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from summary-correll-getting-job-motherhood-2007"
+            }
+          },
+          {
+            "id": "c99e11796723d47a",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "9306d3f8fd47353a",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "57966099ed629d7a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "summary-correll-getting-job-motherhood-2007.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of summary-correll-getting-job-motherhood-2007"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "ed99fe4e974254ea",
+  "lastOpenFiles": [
+    "Untitled 1.base",
+    "Untitled.base",
+    "Untitled.canvas",
+    "summary-correll-getting-job-motherhood-2007.md",
+    "summary-career-family.md",
+    "summary-slaughter-why-women-still-cant-have-it-all-2012.md",
+    "Untitled.md"
+  ]
+}
