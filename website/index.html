@@ -4,14 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Motherhood Penalty After Flexibility</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="hero">
     <nav class="topline" aria-label="Project navigation">
+      <span class="brand-mark">MTHR-PNLTY / 30</span>
       <a href="#story">Story</a>
       <a href="#evidence">Evidence</a>
       <a href="#calculator">Calculator</a>
@@ -24,20 +22,37 @@
         <p class="dek">
           Remote and hybrid work promised a softer landing for working mothers. But in the post-COVID workplace, flexibility may be changing where the penalty appears, not making it disappear.
         </p>
-        <p class="byline">By Charlotte Richard</p>
+        <div class="hero-meta" aria-label="Project metadata">
+          <span>Signal: Post-COVID labor</span>
+          <span>Mode: Static essay</span>
+          <span>By Charlotte Richard</span>
+        </div>
       </div>
 
       <div class="hero__visual" aria-hidden="true">
-        <div class="orb orb--rose"></div>
-        <div class="orb orb--lavender"></div>
-        <div class="arc-card">
-          <span>work</span>
-          <span>care</span>
-          <span>time</span>
+        <div class="signal-card">
+          <div class="signal-card__top">
+            <span>FLEX</span>
+            <span>87.8</span>
+          </div>
+          <div class="signal-card__word">CARE</div>
+          <div class="signal-card__word signal-card__word--outline">WORK</div>
+          <div class="signal-card__readout">
+            <span>VISIBILITY</span>
+            <span>INTERRUPTION</span>
+            <span>PROMOTION</span>
+          </div>
         </div>
       </div>
     </div>
   </header>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>INCOMING SIGNAL: FLEXIBILITY MAY PRESERVE EMPLOYMENT BUT NOT ADVANCEMENT</span>
+      <span>INCOMING SIGNAL: FLEXIBILITY MAY PRESERVE EMPLOYMENT BUT NOT ADVANCEMENT</span>
+    </div>
+  </div>
 
   <main id="story">
     <section class="article-section opener">
@@ -53,14 +68,17 @@
     <section class="wide-break">
       <div class="stat-strip" aria-label="Core project framing">
         <article>
+          <span class="module-tag">input 01</span>
           <span class="stat-number">1</span>
           <p>Childbirth can reduce mothers' earnings through employment, hours, and wage growth.</p>
         </article>
         <article>
+          <span class="module-tag">input 02</span>
           <span class="stat-number">2</span>
           <p>Remote work can help mothers stay attached to paid work.</p>
         </article>
         <article>
+          <span class="module-tag">input 03</span>
           <span class="stat-number">3</span>
           <p>The next penalty may show up in visibility, promotion, and interrupted time.</p>
         </article>
@@ -154,9 +172,24 @@
         </p>
       </div>
       <div class="placeholder-box" aria-hidden="true">
-        <div class="placeholder-bar placeholder-bar--long"></div>
-        <div class="placeholder-bar"></div>
-        <div class="placeholder-curve"></div>
+        <div class="control-row">
+          <span>Office-first</span>
+          <div class="dial dial--low"></div>
+        </div>
+        <div class="control-row">
+          <span>Hybrid</span>
+          <div class="dial dial--mid"></div>
+        </div>
+        <div class="control-row">
+          <span>Care support</span>
+          <div class="dial dial--high"></div>
+        </div>
+        <div class="meter">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </section>
 
