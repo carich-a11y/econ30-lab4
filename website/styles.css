@@ -105,13 +105,14 @@ a {
 }
 
 .hero h1 {
-  max-width: 10ch;
+  max-width: 100%;
   margin: 1rem 0;
-  font-size: clamp(4.4rem, 13vw, 14rem);
+  font-size: clamp(2.6rem, 7vw, 6.5rem);
   font-weight: 900;
-  letter-spacing: -0.1em;
-  line-height: 0.78;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
   text-transform: uppercase;
+  overflow-wrap: break-word;
 }
 
 .dek {
@@ -481,6 +482,21 @@ blockquote {
   padding-bottom: 7rem;
 }
 
+.scope-note {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 2px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  letter-spacing: -0.02em;
+}
+
+.scope-note strong {
+  color: var(--accent);
+}
+
 .site-footer {
   border-top: 2px solid var(--line);
   background: var(--paper-warm);
@@ -560,7 +576,7 @@ blockquote {
   }
 
   .hero h1 {
-    font-size: 4.2rem;
+    font-size: clamp(2.2rem, 11vw, 3.4rem);
   }
 
   .lead,

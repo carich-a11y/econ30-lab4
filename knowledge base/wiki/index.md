@@ -1,5 +1,13 @@
 # Knowledge Base Index
 
+## Remote Work And Mothers
+
+- [[remote-work-and-the-motherhood-penalty]] — The project's central question: does working from home help mothers stay employed or impose a hidden workplace penalty?
+- [[flexibility-stigma]] — The career penalty for using flexible arrangements, driven by perceived rather than actual lower commitment.
+- [[remote-work-monitoring]] — How employer surveillance of remote workers can weaken mothers' standing, promotion, and retention.
+
+See also the annotated [reading list](../reading-list.md) for the full set of remote-work, flexibility-stigma, and COVID-era sources.
+
 ## Core Mechanisms
 
 - [[motherhood-penalty-mechanisms]] — Cross-source synthesis of the main pathways that generate motherhood penalties over time.

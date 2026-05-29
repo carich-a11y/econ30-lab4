@@ -5,6 +5,8 @@ sources:
 related:
   - "[[motherhood-penalty-mechanisms]]"
   - "[[child-penalties]]"
+  - "[[flexibility-stigma]]"
+  - "[[remote-work-monitoring]]"
   - "[[summary-correll-getting-job-motherhood-2007]]"
 last_updated: 2026-04-20
 tags:

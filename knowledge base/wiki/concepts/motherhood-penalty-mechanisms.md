@@ -17,6 +17,9 @@ related:
   - "[[parental-leave-and-job-continuity]]"
   - "[[greedy-work]]"
   - "[[historical-normalization-of-married-womens-work]]"
+  - "[[remote-work-and-the-motherhood-penalty]]"
+  - "[[flexibility-stigma]]"
+  - "[[remote-work-monitoring]]"
 last_updated: 2026-04-20
 tags:
   - synthesis

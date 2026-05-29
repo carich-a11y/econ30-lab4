@@ -8,6 +8,9 @@ related:
   - "[[motherhood-penalty-mechanisms]]"
   - "[[schedule-control]]"
   - "[[nonlinear-career-paths]]"
+  - "[[remote-work-and-the-motherhood-penalty]]"
+  - "[[flexibility-stigma]]"
+  - "[[remote-work-monitoring]]"
   - "[[summary-career-family]]"
   - "[[summary-slaughter-why-women-still-cant-have-it-all-2012]]"
 last_updated: 2026-04-20
