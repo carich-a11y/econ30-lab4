@@ -51,7 +51,8 @@ Context and evidence for the post-2020 expansion of remote work and its effect o
 
 Where the retention and remote-work measures can come from.
 
-- **ACS (American Community Survey).** Long-standing "worked at home" commute question plus employment and fertility variables.
+- **ACS (American Community Survey).** Long-standing "worked at home" commute question plus employment and fertility variables. *Now in use:* the website's "Remote Work Reality Check" calculator is built on ACS 2023 1-year PUMS microdata via `code/fetch_wfh_data.py`, restricted to remote-capable occupations.
+- **Dingel & Neiman (2020), "How Many Jobs Can Be Done at Home?" (NBER / Journal of Public Economics).** Occupation-level classification of which jobs are teleworkable. Used to restrict the calculator's universe to remote-capable occupations so the share reflects who *uses* remote work rather than who happens to hold a white-collar job.
 - **CPS (Current Population Survey).** Employment, ASEC income, and telework questions (including the COVID-era supplement); supports month-to-month and year-over-year attachment measures.
 - **ATUS (American Time Use Survey).** Where and when work happens, plus time spent on care.
 - **SIPP (Survey of Income and Program Participation).** Longitudinal job transitions and fertility — well suited to a retention outcome.

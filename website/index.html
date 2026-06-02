@@ -180,7 +180,7 @@
       <p class="section-kicker">Methodology</p>
       <h2>How this project answers the question.</h2>
       <p>
-        The plan is quantitative, built on existing datasets rather than new surveys or interviews. The goal is to compare job retention for mothers of young children who work remotely against otherwise similar mothers who work on-site, and to see how that comparison changed as remote work expanded after COVID.
+        The plan is quantitative, built on existing datasets rather than new surveys or interviews. The goal is to compare job retention for mothers of young children who work remotely against otherwise similar mothers who work on-site, and to see how that comparison changed as remote work expanded after COVID. A first cut of this data already powers the <a href="#calculator">Remote Work Reality Check</a> below, using real Census ACS microdata restricted to remote-capable occupations (Dingel &amp; Neiman 2020) so job type does not drive the comparison.
       </p>
       <div class="evidence-list">
         <article>
@@ -202,34 +202,94 @@
       </div>
     </section>
 
-    <section class="calculator-placeholder" id="calculator" aria-labelledby="calculator-title">
-      <div>
-        <p class="section-kicker">Coming next</p>
-        <h2 id="calculator-title">Career Flexibility Calculator</h2>
+    <section class="calculator" id="calculator" aria-labelledby="calculator-title">
+      <div class="calc-intro">
+        <p class="section-kicker">Try it · real data</p>
+        <h2 id="calculator-title">Remote Work Reality Check</h2>
         <p>
-          A future interactive will let readers compare lifetime earnings scenarios under office-first work, hybrid flexibility, remote work, and stronger leave or childcare support.
+          Among workers whose jobs <em>can</em> be done from home, pick a group and see the actual share who worked from home, straight from the Census Bureau's American Community Survey (<span data-out="year">2023</span>). Holding job type roughly constant this way isolates who uses remote work, not just who has a desk job. Then read what the research says it means for the motherhood penalty.
         </p>
       </div>
-      <div class="placeholder-box" aria-hidden="true">
-        <div class="control-row">
-          <span>Office-first</span>
-          <div class="dial dial--low"></div>
-        </div>
-        <div class="control-row">
-          <span>Hybrid</span>
-          <div class="dial dial--mid"></div>
-        </div>
-        <div class="control-row">
-          <span>Care support</span>
-          <div class="dial dial--high"></div>
-        </div>
-        <div class="meter">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
+
+      <div class="calc-grid">
+        <form class="calc-controls" aria-label="Group selector">
+          <fieldset class="calc-field">
+            <legend>Sex</legend>
+            <div class="segmented" role="radiogroup" aria-label="Sex" data-input="sex">
+              <button type="button" role="radio" aria-checked="false" data-value="women">Women</button>
+              <button type="button" role="radio" aria-checked="false" data-value="men">Men</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="calc-field">
+            <legend>Young child at home</legend>
+            <div class="segmented" role="radiogroup" aria-label="Young child at home" data-input="kids">
+              <button type="button" role="radio" aria-checked="false" data-value="kids">Child under 6</button>
+              <button type="button" role="radio" aria-checked="false" data-value="nokids">No young child</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="calc-field">
+            <legend>Education</legend>
+            <div class="segmented" role="radiogroup" aria-label="Education" data-input="edu">
+              <button type="button" role="radio" aria-checked="false" data-value="ba">Bachelor's or higher</button>
+              <button type="button" role="radio" aria-checked="false" data-value="noba">Less than bachelor's</button>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="calc-output" aria-live="polite">
+          <p class="calc-output__label">Worked from home, remote-capable jobs (ACS <span data-out="year">2023</span>)</p>
+          <p class="calc-output__number"><span data-out="share">24.6</span><span class="calc-output__unit">%</span></p>
+          <div class="result-bar" role="img" aria-label="Work-from-home share">
+            <span class="result-bar__fill" data-out="bar" style="width: 24.6%;"></span>
+          </div>
+
+          <div class="calc-secondary">
+            <span class="calc-secondary__label" data-out="gapLabel">Gap vs men</span>
+            <span class="calc-secondary__value" data-out="gap">+0.0 pts</span>
+          </div>
+
+          <div class="comparison-panel" aria-label="Comparison panel">
+            <p class="comparison-panel__title">Compare against</p>
+            <div class="comparison-row">
+              <span data-out="genderCompareLabel">Comparable men</span>
+              <strong data-out="genderCompare">−0.8 pts</strong>
+            </div>
+            <div class="comparison-row">
+              <span data-out="childCompareLabel">Women without young children</span>
+              <strong data-out="childCompare">+0.1 pts</strong>
+            </div>
+            <div class="comparison-row">
+              <span data-out="eduCompareLabel">Women with young children, less than bachelor's</span>
+              <strong data-out="eduCompare">+7.9 pts</strong>
+            </div>
+            <p class="comparison-insight" data-out="comparisonInsight">
+              Even among remote-capable jobs, education remains the largest divide in who works from home.
+            </p>
+          </div>
+
+          <p class="verdict" data-out="verdict">Pick a group above to see the real share and what it means.</p>
+          <p class="calc-sample" data-out="sample">Sample size shown after you choose a group.</p>
         </div>
       </div>
+
+      <details class="calc-notes">
+        <summary>Data and method</summary>
+        <div class="calc-notes__body">
+          <p>
+            Shares are computed from the U.S. Census Bureau's American Community Survey 1-year Public Use Microdata Sample (<span data-out="year">2023</span>), weighted by person weight. The universe is people employed and at work in the reference week who reported a commute mode <strong>and who work in a remote-capable occupation</strong>; "worked from home" is that commute response. Remote-capable occupations are the major groups that are predominantly teleworkable following Dingel &amp; Neiman (2020), which removes most of the white-collar versus blue-collar confound so the comparison reflects who <em>uses</em> remote work, not just who could. "Young child" means living in a household with an own child under age 6; "bachelor's or higher" is the person's educational attainment. The numbers are generated by <code>code/fetch_wfh_data.py</code> and stored in <code>website/data/wfh.js</code>.
+          </p>
+          <p><strong>What the prevalence implies (from the literature):</strong></p>
+          <ul>
+            <li><strong>Even among remote-capable jobs, use is uneven.</strong> Once job type is held roughly constant, remaining gaps by sex, motherhood, and education reflect who actually takes up remote work.</li>
+            <li><strong>Remote work raises retention but cuts promotion.</strong> Bloom, Liang, Roberts &amp; Ying (2015) found working from home cut attrition by over 50% yet roughly halved promotion rates.</li>
+            <li><strong>Distance erodes advancement.</strong> Emanuel &amp; Harrington (2023/24) and Emanuel, Harrington &amp; Pallais (2023) find remote workers are promoted less and lose in-person mentoring, with larger effects for women and junior workers.</li>
+            <li><strong>Mothers and remote work.</strong> Collins, Landivar, Ruppanner &amp; Scarborough (2021) and Goldin (2014; 2021) link flexibility to whether mothers stay attached to paid work, and at what career cost.</li>
+          </ul>
+          <p>Full citations are in the project <a href="../knowledge%20base/reading-list.md">reading list</a>.</p>
+        </div>
+      </details>
     </section>
 
     <section class="article-section closing">
@@ -245,9 +305,10 @@
   </main>
 
   <footer class="site-footer">
-    <p>Built for Econ 30. Future interactive coming soon.</p>
+    <p>Built for Econ 30. Try the career flexibility calculator above.</p>
   </footer>
 
+  <script src="data/wfh.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
