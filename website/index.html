@@ -14,6 +14,7 @@
       <a href="#evidence">Evidence</a>
       <a href="#methods">Methods</a>
       <a href="#calculator">Calculator</a>
+      <a href="#finding">Finding</a>
     </nav>
 
     <div class="hero__grid">
@@ -197,7 +198,7 @@
         </article>
         <article>
           <h3>What would settle it</h3>
-          <p>If remote mothers show higher retention than comparable on-site mothers, working from home helps. If they leave jobs faster or stall out, the workplace channel is imposing a hidden penalty.</p>
+          <p>If remote mothers show higher retention than comparable on-site mothers, working from home helps. If they leave jobs faster or stall out, the workplace channel is imposing a hidden penalty. The <a href="#finding">matched CPS panel</a> below runs exactly this test.</p>
         </article>
       </div>
     </section>
@@ -292,11 +293,73 @@
       </details>
     </section>
 
+    <section class="finding" id="finding" aria-labelledby="finding-title">
+      <div class="finding__intro">
+        <p class="section-kicker">The answer · real panel data</p>
+        <h2 id="finding-title">On the retention margin, remote work helps mothers stay employed.</h2>
+        <p>
+          To move past who <em>uses</em> remote work and test what it does, this project follows the same workers over time. The Current Population Survey re-interviews households a year apart, so workers employed in <span data-out="baselineStart">June 2024</span> can be matched to their own record 12 months later. The question: of those employed at the start, how many are <strong>still employed</strong> a year on—and does teleworking at the start change the odds?
+        </p>
+      </div>
+
+      <div class="finding__headline">
+        <p class="finding__big"><span data-out="mothersGap">+2.8</span><span class="finding__unit"> pp</span></p>
+        <p class="finding__big-label">
+          Mothers of young children who teleworked were <strong><span data-out="mothersGap2">+2.8</span> points</strong> more likely to still be employed a year later (<span data-out="mothersRemote">93.7</span>% vs <span data-out="mothersOnsite">90.9</span>%)—a retention gain about <strong>three times</strong> the one fathers got.
+        </p>
+      </div>
+
+      <div class="retention-table" role="table" aria-label="12-month employment retention, remote vs on-site">
+        <div class="retention-row retention-row--head" role="row">
+          <span role="columnheader">Group (employed at baseline)</span>
+          <span role="columnheader">Teleworked</span>
+          <span role="columnheader">On-site</span>
+          <span role="columnheader">Gap</span>
+        </div>
+        <div class="retention-row retention-row--key" role="row">
+          <span role="cell">Mothers, child under 6</span>
+          <strong role="cell"><span data-out="mothersRemote2">93.7</span>%</strong>
+          <span role="cell"><span data-out="mothersOnsite2">90.9</span>%</span>
+          <strong role="cell" class="retention-gap" data-out="mothersGap3">+2.8 pp</strong>
+        </div>
+        <div class="retention-row" role="row">
+          <span role="cell">Fathers, child under 6</span>
+          <strong role="cell"><span data-out="fathersRemote">97.9</span>%</strong>
+          <span role="cell"><span data-out="fathersOnsite">97.0</span>%</span>
+          <strong role="cell" class="retention-gap" data-out="fathersGap">+0.9 pp</strong>
+        </div>
+        <div class="retention-row" role="row">
+          <span role="cell">Women, no children</span>
+          <strong role="cell"><span data-out="womenRemote">94.6</span>%</strong>
+          <span role="cell"><span data-out="womenOnsite">90.3</span>%</span>
+          <strong role="cell" class="retention-gap" data-out="womenGap">+4.3 pp</strong>
+        </div>
+      </div>
+
+      <p class="finding__claim">
+        <strong>The argument.</strong> On the outcome this project defines as "better"—staying attached to paid work—the evidence points one way: among comparable workers, mothers of young children who work from home are more likely to keep their jobs a year later than mothers who do not, and the boost they get is larger than fathers'. The "remote work keeps mothers employed" story dominates the "remote work pushes mothers out" story <em>on retention</em>. That is consistent with the literature's split verdict: flexibility tends to protect employment even where it dents promotion (Bloom et al. 2015; Emanuel &amp; Harrington 2023/24). The motherhood penalty does not vanish—it narrows on the margin remote work touches most.
+      </p>
+
+      <p class="finding__caveat">
+        <strong>How firm is this?</strong> It is a strong, defensible association, not a clean causal estimate. Teleworkers differ from on-site workers in occupation, schedule, and unobserved ways, so part of the gap reflects selection. The panel matches <span data-out="totalMatched">66,000</span> workers across <span data-out="baselineWindow">June 2024–April 2025</span> at a <span data-out="matchRate">60</span>% match rate (typical for CPS), weighted by the baseline person weight. The honest conclusion is a qualified one: remote work is associated with higher retention for mothers, the project's defined measure of "better," with promotion and wage effects left as the open question.
+      </p>
+
+      <details class="calc-notes">
+        <summary>Data and method (retention panel)</summary>
+        <div class="calc-notes__body">
+          <p>
+            Built from the U.S. Census Bureau's Current Population Survey basic monthly public-use files. CPS uses a 4-8-4 rotation, so a person in month-in-sample 1–4 returns 12 months later in month-in-sample 5–8. Workers employed at baseline (<code>PEMLR = 1</code>) who answered the telework item (<code>PTTLWK</code>, available June 2024+) are matched to their record 12 months later on household and person identifiers (<code>HRHHID</code>, <code>HRHHID2</code>, <code>PULINENO</code>), validated on sex and age. "Still employed" is <code>PEMLR</code> 1–2 at follow-up; "teleworked" is <code>PTTLWK = 1</code> at baseline; "young child" is an own child under 6 (<code>PRCHLD</code>); ages 18–50. The numbers are generated by <code>code/fetch_cps_retention.py</code> and stored in <code>website/data/retention.js</code>.
+          </p>
+          <p>Full citations are in the project <a href="../knowledge%20base/reading-list.md">reading list</a>.</p>
+        </div>
+      </details>
+    </section>
+
     <section class="article-section closing">
       <p class="section-kicker">What this project asks</p>
       <h2>Does working from home keep mothers employed, or push them out?</h2>
       <p>
-        If working from home helps mothers stay attached to paid work, that is a real gain. But if employer monitoring, productivity assumptions, and doubts about commitment cost mothers their footing, then remote work has not removed the motherhood penalty. It has relocated it inside the home office. This project tests which of those stories holds, using job retention as the measure of “better.”
+        If working from home helps mothers stay attached to paid work, that is a real gain. But if employer monitoring, productivity assumptions, and doubts about commitment cost mothers their footing, then remote work has not removed the motherhood penalty—it has relocated it inside the home office. The matched CPS panel above gives a first answer: on retention, the gain wins—mothers who work from home are more likely to keep their jobs a year later. The open question is whether that durable foothold comes at the price of slower promotion and weaker wage growth, which is where the workplace channel could still be hiding the penalty.
       </p>
       <p class="scope-note">
         <strong>Scope note.</strong> Remote work can reach mothers through two channels. The first is the <strong>workplace channel</strong>: the relationship between a mother and her employer, managers, and coworkers, including monitoring, perceptions of productivity, commitment, and promotion. The second is the <strong>household channel</strong>: being physically at home can raise expectations that the mother also handles childcare, cooking, cleaning, school pickup, and emergencies while working. These are related but distinct stories. This project analyzes the <strong>workplace channel</strong>; the household channel is left for future work.
@@ -309,6 +372,7 @@
   </footer>
 
   <script src="data/wfh.js"></script>
+  <script src="data/retention.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -53,7 +53,7 @@ Where the retention and remote-work measures can come from.
 
 - **ACS (American Community Survey).** Long-standing "worked at home" commute question plus employment and fertility variables. *Now in use:* the website's "Remote Work Reality Check" calculator is built on ACS 2023 1-year PUMS microdata via `code/fetch_wfh_data.py`, restricted to remote-capable occupations.
 - **Dingel & Neiman (2020), "How Many Jobs Can Be Done at Home?" (NBER / Journal of Public Economics).** Occupation-level classification of which jobs are teleworkable. Used to restrict the calculator's universe to remote-capable occupations so the share reflects who *uses* remote work rather than who happens to hold a white-collar job.
-- **CPS (Current Population Survey).** Employment, ASEC income, and telework questions (including the COVID-era supplement); supports month-to-month and year-over-year attachment measures.
+- **CPS (Current Population Survey).** Employment, ASEC income, and telework questions; supports month-to-month and year-over-year attachment measures. *Now in use:* the website's **Finding** section is a 12-month matched panel built from the CPS basic monthly public-use files via `code/fetch_cps_retention.py`. The CPS 4-8-4 rotation lets the same worker be matched a year apart (MIS 1–4 → MIS 5–8); treatment is the permanent telework item `PTTLWK` (available June 2024+) and the outcome is whether a baseline-employed worker is still employed 12 months later. Result: mothers of young children who teleworked were ~2.8 pp more likely to still be employed a year later (93.7% vs 90.9%), about three times the gain for fathers. Descriptive, not causal (telework selection).
 - **ATUS (American Time Use Survey).** Where and when work happens, plus time spent on care.
 - **SIPP (Survey of Income and Program Participation).** Longitudinal job transitions and fertility — well suited to a retention outcome.
 - **Household Pulse Survey (Census).** High-frequency COVID-era data on remote work, caregiving, and employment.
@@ -64,5 +64,5 @@ Where the retention and remote-work measures can come from.
 ## Suggested next steps
 
 1. Prioritize reading Bloom et al. (2015) and Emanuel & Harrington — they frame the exact "retention up, promotion down" tension.
-2. Confirm data access and which dataset best supports a remote-vs-onsite retention comparison for mothers of young children (SIPP and CPS are the strongest candidates).
+2. ~~Confirm data access and which dataset best supports a remote-vs-onsite retention comparison for mothers of young children (SIPP and CPS are the strongest candidates).~~ **Done:** CPS basic monthly matched panel implemented in `code/fetch_cps_retention.py`; see the website Finding section. Next, robustness checks — add education/occupation controls, test the labor-force-attachment outcome, and compare against a SIPP panel.
 3. As you obtain PDFs, drop them in `knowledge base/raw/` and add summaries to `knowledge base/wiki/summaries/` per the knowledge base rules.

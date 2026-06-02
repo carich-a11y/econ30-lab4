@@ -51,3 +51,47 @@ The script automatically uses the latest available ACS 1-year year (currently
   predominantly teleworkable major group (Dingel & Neiman 2020); the universe is
   people employed and at work in the reference week (`ESR` = 1) with a reported
   commute mode in a remote-capable occupation.
+
+## `fetch_cps_retention.py` — 12-month job-retention panel
+
+Builds the real numbers behind the site's **Finding** section: do mothers of
+young children who work remotely *stay employed* longer than comparable mothers
+who do not?
+
+The ACS calculator is a single cross-section, so it can only show who *uses*
+remote work, not what it does over time. Answering the retention question
+requires following the same people. The Current Population Survey (CPS) makes
+this possible without an API key. CPS uses a 4-8-4 rotation: a household is
+interviewed for 4 months, rests for 8, then returns for 4 more. A person in
+month-in-sample (MIS) 1–4 of month *m* therefore reappears in MIS 5–8 exactly 12
+months later. The script downloads the public-use basic monthly CSVs, matches
+month *m* to month *m+12* on the household and person identifiers (`HRHHID`,
+`HRHHID2`, `PULINENO`), and validates each match on sex and age.
+
+- **Treatment**: teleworked at home in the reference week at baseline
+  (`PTTLWK = 1`), a permanent CPS item that began **June 2024** — hence baselines
+  start there. On-site comparison is employed but not teleworking (`PTTLWK = 2`).
+- **Outcome**: still employed (`PEMLR` 1–2), and separately still in the labor
+  force (`PEMLR` 1–4), 12 months later.
+- **Groups**: sex × young child (own child under 6, `PRCHLD`) × telework status;
+  ages 18–50; weighted by the baseline final person weight `PWSSWGT`.
+- **Window**: 10 baseline months, June 2024–April 2025 (October 2024 skipped
+  because the October 2025 follow-up file is not published), matched to
+  June 2025–April 2026.
+
+Output is written to [`../website/data/retention.js`](../website/data/retention.js)
+as a `window.RETENTION_DATA` global. Only the computed summary ships; raw
+microdata is streamed and discarded.
+
+```bash
+python3 code/fetch_cps_retention.py
+```
+
+It prints per-pair match rates, a retention table, and the headline remote-vs-
+on-site gaps, then overwrites `website/data/retention.js`. Match rates run
+~56–63%, typical for matched CPS panels.
+
+**Important caveat (stated on the site too):** this is a descriptive
+association, not a causal estimate. Teleworkers differ from on-site workers in
+occupation, schedule, and unobserved ways, so part of the retention gap reflects
+selection rather than the effect of remote work itself.
