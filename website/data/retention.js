@@ -13,7 +13,8 @@ window.RETENTION_DATA = {
     "retentionEmp": "Still employed (PEMLR 1-2) 12 months later.",
     "retentionLf": "Still in the labor force (PEMLR 1-4) 12 months later.",
     "ageBand": "Ages 18-50 at baseline.",
-    "caveat": "Descriptive comparison, not a causal estimate: workers who telework differ from those who do not (occupation, schedule, selection). Weighted by the baseline final person weight."
+    "caveat": "Descriptive comparison, not a causal estimate: workers who telework differ from those who do not (occupation, schedule, selection). Weighted by the baseline final person weight.",
+    "occupations": "Retention by CPS detailed occupation group (PRDTOCC1) of the baseline job, all workers, remote vs on-site. 'significant' marks a two-sided pooled two-proportion z-test on unweighted matched counts at p < 0.05. The test ignores the CPS complex survey design and tests many groups, so p-values are approximate."
   },
   "cells": {
     "men|nochild|onsite": {
@@ -57,6 +58,360 @@ window.RETENTION_DATA = {
       "nMatched": 2548
     }
   },
+  "occupations": [
+    {
+      "code": 16,
+      "label": "Sales and related",
+      "remote": {
+        "retention": 95.8,
+        "n": 1776
+      },
+      "onsite": {
+        "retention": 90.9,
+        "n": 5531
+      },
+      "gap": 4.9,
+      "p": 0.0,
+      "significant": true,
+      "isSweGroup": false
+    },
+    {
+      "code": 15,
+      "label": "Personal care and service",
+      "remote": {
+        "retention": 93.6,
+        "n": 254
+      },
+      "onsite": {
+        "retention": 88.7,
+        "n": 1898
+      },
+      "gap": 4.9,
+      "p": 0.1003,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 12,
+      "label": "Protective service",
+      "remote": {
+        "retention": 97.2,
+        "n": 129
+      },
+      "onsite": {
+        "retention": 93.4,
+        "n": 1648
+      },
+      "gap": 3.8,
+      "p": 0.0535,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 14,
+      "label": "Building and grounds cleaning and maintenance",
+      "remote": {
+        "retention": 92.9,
+        "n": 84
+      },
+      "onsite": {
+        "retention": 89.2,
+        "n": 2486
+      },
+      "gap": 3.7,
+      "p": 0.1578,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 17,
+      "label": "Office and administrative support",
+      "remote": {
+        "retention": 94.2,
+        "n": 2298
+      },
+      "onsite": {
+        "retention": 90.9,
+        "n": 6176
+      },
+      "gap": 3.3,
+      "p": 0.0002,
+      "significant": true,
+      "isSweGroup": false
+    },
+    {
+      "code": 22,
+      "label": "Transportation and material moving",
+      "remote": {
+        "retention": 94.0,
+        "n": 107
+      },
+      "onsite": {
+        "retention": 91.0,
+        "n": 5628
+      },
+      "gap": 3.0,
+      "p": 0.4339,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 9,
+      "label": "Arts, design, entertainment, sports, media",
+      "remote": {
+        "retention": 93.8,
+        "n": 932
+      },
+      "onsite": {
+        "retention": 91.5,
+        "n": 897
+      },
+      "gap": 2.3,
+      "p": 0.0754,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 6,
+      "label": "Community and social service",
+      "remote": {
+        "retention": 94.3,
+        "n": 574
+      },
+      "onsite": {
+        "retention": 92.1,
+        "n": 1059
+      },
+      "gap": 2.2,
+      "p": 0.0855,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 8,
+      "label": "Education, training, and library",
+      "remote": {
+        "retention": 95.3,
+        "n": 831
+      },
+      "onsite": {
+        "retention": 93.5,
+        "n": 4403
+      },
+      "gap": 1.8,
+      "p": 0.0561,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 2,
+      "label": "Business and financial operations",
+      "remote": {
+        "retention": 96.4,
+        "n": 3569
+      },
+      "onsite": {
+        "retention": 94.6,
+        "n": 2577
+      },
+      "gap": 1.8,
+      "p": 0.0311,
+      "significant": true,
+      "isSweGroup": false
+    },
+    {
+      "code": 10,
+      "label": "Healthcare practitioner and technical",
+      "remote": {
+        "retention": 96.6,
+        "n": 813
+      },
+      "onsite": {
+        "retention": 95.4,
+        "n": 5283
+      },
+      "gap": 1.2,
+      "p": 0.8181,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 11,
+      "label": "Healthcare support",
+      "remote": {
+        "retention": 90.9,
+        "n": 246
+      },
+      "onsite": {
+        "retention": 90.0,
+        "n": 2494
+      },
+      "gap": 0.9,
+      "p": 0.8155,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 3,
+      "label": "Computer and mathematical",
+      "remote": {
+        "retention": 96.4,
+        "n": 2861
+      },
+      "onsite": {
+        "retention": 95.6,
+        "n": 1197
+      },
+      "gap": 0.8,
+      "p": 0.1882,
+      "significant": false,
+      "isSweGroup": true
+    },
+    {
+      "code": 4,
+      "label": "Architecture and engineering",
+      "remote": {
+        "retention": 98.0,
+        "n": 887
+      },
+      "onsite": {
+        "retention": 97.6,
+        "n": 1380
+      },
+      "gap": 0.4,
+      "p": 0.6988,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 21,
+      "label": "Production",
+      "remote": {
+        "retention": 94.5,
+        "n": 231
+      },
+      "onsite": {
+        "retention": 94.1,
+        "n": 3870
+      },
+      "gap": 0.4,
+      "p": 0.5243,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 1,
+      "label": "Management",
+      "remote": {
+        "retention": 96.3,
+        "n": 4859
+      },
+      "onsite": {
+        "retention": 96.3,
+        "n": 6909
+      },
+      "gap": 0.0,
+      "p": 0.3319,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 5,
+      "label": "Life, physical, and social science",
+      "remote": {
+        "retention": 95.2,
+        "n": 514
+      },
+      "onsite": {
+        "retention": 95.7,
+        "n": 803
+      },
+      "gap": -0.5,
+      "p": 0.2385,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 20,
+      "label": "Installation, maintenance, and repair",
+      "remote": {
+        "retention": 94.5,
+        "n": 116
+      },
+      "onsite": {
+        "retention": 95.4,
+        "n": 2787
+      },
+      "gap": -0.9,
+      "p": 0.9681,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 7,
+      "label": "Legal",
+      "remote": {
+        "retention": 97.0,
+        "n": 671
+      },
+      "onsite": {
+        "retention": 97.9,
+        "n": 440
+      },
+      "gap": -0.9,
+      "p": 0.843,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 13,
+      "label": "Food preparation and serving",
+      "remote": {
+        "retention": 85.6,
+        "n": 54
+      },
+      "onsite": {
+        "retention": 87.2,
+        "n": 4100
+      },
+      "gap": -1.6,
+      "p": 0.5674,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 18,
+      "label": "Farming, fishing, and forestry",
+      "remote": {
+        "retention": 87.9,
+        "n": 26
+      },
+      "onsite": {
+        "retention": 89.6,
+        "n": 533
+      },
+      "gap": -1.7,
+      "p": 0.7722,
+      "significant": false,
+      "isSweGroup": false
+    },
+    {
+      "code": 19,
+      "label": "Construction and extraction",
+      "remote": {
+        "retention": 91.1,
+        "n": 160
+      },
+      "onsite": {
+        "retention": 93.7,
+        "n": 4428
+      },
+      "gap": -2.6,
+      "p": 0.4446,
+      "significant": false,
+      "isSweGroup": false
+    }
+  ],
   "headline": {
     "mothers": {
       "remote": 93.7,
@@ -81,9 +436,9 @@ window.RETENTION_DATA = {
     }
   },
   "totals": {
-    "baseline": 110682,
-    "matched": 65968,
-    "matchRate": 59.6
+    "baseline": 143332,
+    "matched": 88519,
+    "matchRate": 61.8
   },
-  "generatedAt": "2026-06-02"
+  "generatedAt": "2026-06-08"
 };

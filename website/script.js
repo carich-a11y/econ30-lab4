@@ -336,4 +336,50 @@ document.documentElement.classList.add("js-ready");
   if (data.baselineWindow) {
     set("baselineWindow", "June 2024\u2013April 2025");
   }
+
+  renderOccupations();
+
+  function escapeHtml(text) {
+    return String(text).replace(/[&<>]/g, function (ch) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[ch];
+    });
+  }
+
+  function renderOccupations() {
+    var host = finding.querySelector('[data-out="occRows"]');
+    if (!host || !data.occupations) {
+      return;
+    }
+    var MIN_REMOTE_N = 100;
+    var rows = data.occupations.filter(function (o) {
+      return o.gap !== null && o.remote && o.remote.n >= MIN_REMOTE_N;
+    });
+    rows.sort(function (a, b) { return b.gap - a.gap; });
+
+    var html = "";
+    for (var i = 0; i < rows.length; i++) {
+      var o = rows[i];
+      var cls = "retention-row" + (o.isSweGroup ? " retention-row--swe" : "");
+      var star = o.significant ? "<span class=\"sig\"> *</span>" : "";
+      var label = escapeHtml(o.label) +
+        (o.isSweGroup ? " <span class=\"occ-tag\">incl. software devs</span>" : "");
+      html += "<div class=\"" + cls + "\" role=\"row\">" +
+        "<span role=\"cell\">" + label + "</span>" +
+        "<strong role=\"cell\">" + o.remote.retention.toFixed(1) + "% " +
+          "<span class=\"occ-n\">(" + commas(o.remote.n) + ")</span></strong>" +
+        "<span role=\"cell\">" + o.onsite.retention.toFixed(1) + "% " +
+          "<span class=\"occ-n\">(" + commas(o.onsite.n) + ")</span></span>" +
+        "<strong role=\"cell\" class=\"retention-gap\">" + pp(o.gap) + star +
+          "</strong>" +
+        "</div>";
+    }
+    host.innerHTML = html;
+
+    var omitted = data.occupations.length - rows.length;
+    var legend = finding.querySelector('[data-out="occLegend"]');
+    if (omitted > 0 && legend) {
+      legend.insertAdjacentHTML("beforeend",
+        " " + omitted + " low-telework groups are omitted for too few teleworkers to compare.");
+    }
+  }
 })();

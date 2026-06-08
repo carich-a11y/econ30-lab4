@@ -27,6 +27,8 @@ No third-party packages are required. To refresh:
 """
 
 import csv
+import json
+import math
 import os
 import ssl
 import sys
@@ -61,6 +63,37 @@ PAIRS = [
 YOUNG_CHILD_CODES = {1, 2, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15}
 
 AGE_MIN, AGE_MAX = 18, 50
+
+# CPS detailed occupation recode (PRDTOCC1) major groups. "Computer and
+# mathematical occupations" (3) is the group that contains software developers.
+OCC_LABELS = {
+    1: "Management",
+    2: "Business and financial operations",
+    3: "Computer and mathematical",
+    4: "Architecture and engineering",
+    5: "Life, physical, and social science",
+    6: "Community and social service",
+    7: "Legal",
+    8: "Education, training, and library",
+    9: "Arts, design, entertainment, sports, media",
+    10: "Healthcare practitioner and technical",
+    11: "Healthcare support",
+    12: "Protective service",
+    13: "Food preparation and serving",
+    14: "Building and grounds cleaning and maintenance",
+    15: "Personal care and service",
+    16: "Sales and related",
+    17: "Office and administrative support",
+    18: "Farming, fishing, and forestry",
+    19: "Construction and extraction",
+    20: "Installation, maintenance, and repair",
+    21: "Production",
+    22: "Transportation and material moving",
+    23: "Armed Forces",
+}
+
+# The occupation group that contains software developers (PEIO1OCD 1021).
+SWE_OCC_CODE = 3
 
 
 def make_ssl_context():
@@ -175,22 +208,30 @@ def read_baseline(path):
             if age is None or age < AGE_MIN or age > AGE_MAX:
                 continue
             sex = to_int(row[idx["PESEX"]])
-            child = child_label(to_int(row[idx["PRCHLD"]]))
-            if sex not in (1, 2) or child is None:
+            if sex not in (1, 2):
                 continue
+            child = child_label(to_int(row[idx["PRCHLD"]]))  # may be None
+            occ = to_int(row[idx["PRDTOCC1"]])
             people[person_key(row, idx)] = {
                 "sex": sex,
                 "age": age,
                 "mis": mis,
                 "child": child,
+                "occ": occ,
                 "remote": telework == 1,
                 "weight": to_float(row[idx["PWSSWGT"]]) or 0.0,
             }
     return people
 
 
-def accumulate_outcomes(path, baseline, cells):
-    """Stream the +12-month file, match people, and tally retention."""
+def accumulate_outcomes(path, baseline, cells, occ_cells):
+    """Stream the +12-month file, match people, and tally retention.
+
+    `cells` holds the sex x child x telework breakdown (only workers with a clean
+    young-child / no-child status). `occ_cells` holds the occupation x telework
+    breakdown over all matched workers, with unweighted success counts for the
+    significance test.
+    """
     idx = header_index(path)
     matched = 0
     with open(path, "r", encoding="latin-1", newline="") as fh:
@@ -210,20 +251,34 @@ def accumulate_outcomes(path, baseline, cells):
             if mlr is None:
                 continue
             matched += 1
-            cell_key = "%s|%s|%s" % (
-                sex_label(base["sex"]),
-                base["child"],
-                "remote" if base["remote"] else "onsite",
-            )
-            cell = cells.setdefault(
-                cell_key, {"den": 0.0, "emp": 0.0, "lf": 0.0, "n": 0})
             w = base["weight"]
-            cell["den"] += w
-            cell["n"] += 1
-            if mlr in (1, 2):  # still employed
-                cell["emp"] += w
-            if mlr in (1, 2, 3, 4):  # still in the labor force
-                cell["lf"] += w
+            still_emp = mlr in (1, 2)
+            in_lf = mlr in (1, 2, 3, 4)
+            tele = "remote" if base["remote"] else "onsite"
+
+            if base["child"] is not None:
+                cell_key = "%s|%s|%s" % (
+                    sex_label(base["sex"]), base["child"], tele)
+                cell = cells.setdefault(
+                    cell_key, {"den": 0.0, "emp": 0.0, "lf": 0.0, "n": 0})
+                cell["den"] += w
+                cell["n"] += 1
+                if still_emp:
+                    cell["emp"] += w
+                if in_lf:
+                    cell["lf"] += w
+
+            occ = base["occ"]
+            if occ in OCC_LABELS:
+                oc = occ_cells.setdefault(occ, {
+                    "remote": {"den": 0.0, "emp": 0.0, "n": 0, "x": 0},
+                    "onsite": {"den": 0.0, "emp": 0.0, "n": 0, "x": 0},
+                })[tele]
+                oc["den"] += w
+                oc["n"] += 1
+                if still_emp:
+                    oc["emp"] += w
+                    oc["x"] += 1
     return matched
 
 
@@ -231,9 +286,29 @@ def pct(num, den):
     return round(100.0 * num / den, 1) if den else None
 
 
+def two_proportion_p(x1, n1, x2, n2):
+    """Two-sided p-value for a pooled two-proportion z-test.
+
+    x1/x2 are success counts (still employed), n1/n2 the group sizes. Uses the
+    standard-normal CDF via math.erf so the script stays dependency-free.
+    Returns None when either group is empty or has no variation.
+    """
+    if n1 == 0 or n2 == 0:
+        return None
+    p1 = x1 / n1
+    p2 = x2 / n2
+    pooled = (x1 + x2) / (n1 + n2)
+    se = math.sqrt(pooled * (1.0 - pooled) * (1.0 / n1 + 1.0 / n2))
+    if se == 0:
+        return None
+    z = (p1 - p2) / se
+    return 2.0 * (1.0 - 0.5 * (1.0 + math.erf(abs(z) / math.sqrt(2.0))))
+
+
 def main():
     print("Building 12-month CPS retention panel...\n")
     cells = {}
+    occ_cells = {}
     total_baseline = 0
     total_matched = 0
     with tempfile.TemporaryDirectory() as tmp:
@@ -244,7 +319,7 @@ def main():
             baseline = read_baseline(b_path)
             os.remove(b_path)
             download(url_for(oy, om), o_path)
-            matched = accumulate_outcomes(o_path, baseline, cells)
+            matched = accumulate_outcomes(o_path, baseline, cells, occ_cells)
             os.remove(o_path)
             total_baseline += len(baseline)
             total_matched += matched
@@ -279,6 +354,26 @@ def main():
         "womenNoChild": gap("women|nochild"),
     }
 
+    occupations = []
+    for code, c in occ_cells.items():
+        r, o = c["remote"], c["onsite"]
+        r_ret = pct(r["emp"], r["den"])
+        o_ret = pct(o["emp"], o["den"])
+        p = two_proportion_p(r["x"], r["n"], o["x"], o["n"])
+        occupations.append({
+            "code": code,
+            "label": OCC_LABELS[code],
+            "remote": {"retention": r_ret, "n": r["n"]},
+            "onsite": {"retention": o_ret, "n": o["n"]},
+            "gap": (round(r_ret - o_ret, 1)
+                    if r_ret is not None and o_ret is not None else None),
+            "p": (round(p, 4) if p is not None else None),
+            "significant": (p is not None and p < 0.05),
+            "isSweGroup": code == SWE_OCC_CODE,
+        })
+    occupations.sort(
+        key=lambda d: (d["gap"] is None, -(d["gap"] or 0)))
+
     payload = {
         "source": "U.S. Census Bureau, Current Population Survey basic monthly files",
         "design": "12-month matched panel (CPS 4-8-4 rotation); workers employed "
@@ -297,8 +392,15 @@ def main():
             "caveat": "Descriptive comparison, not a causal estimate: workers who "
                       "telework differ from those who do not (occupation, schedule, "
                       "selection). Weighted by the baseline final person weight.",
+            "occupations": "Retention by CPS detailed occupation group (PRDTOCC1) "
+                           "of the baseline job, all workers, remote vs on-site. "
+                           "'significant' marks a two-sided pooled two-proportion "
+                           "z-test on unweighted matched counts at p < 0.05. The "
+                           "test ignores the CPS complex survey design and tests "
+                           "many groups, so p-values are approximate.",
         },
         "cells": out_cells,
+        "occupations": occupations,
         "headline": headline,
         "totals": {"baseline": total_baseline, "matched": total_matched,
                    "matchRate": pct(total_matched, total_baseline)},
@@ -320,11 +422,20 @@ def main():
         else:
             print("  %-14s insufficient sample" % name)
 
+    print("\nRetention by occupation group (remote vs on-site, all workers):")
+    for occ in occupations:
+        r, o = occ["remote"], occ["onsite"]
+        rr = "n/a" if r["retention"] is None else "%.1f%%" % r["retention"]
+        oo = "n/a" if o["retention"] is None else "%.1f%%" % o["retention"]
+        gp = "  n/a" if occ["gap"] is None else "%+5.1f" % occ["gap"]
+        star = " *" if occ["significant"] else ""
+        print("  %-46s remote %-7s (n=%5d)  onsite %-7s (n=%5d)  gap %s pp%s"
+              % (occ["label"], rr, r["n"], oo, o["n"], gp, star))
+
     out_dir = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "..", "website", "data"))
     os.makedirs(out_dir, exist_ok=True)
     out_path = os.path.join(out_dir, "retention.js")
-    import json
     with open(out_path, "w") as fh:
         fh.write("// Auto-generated by code/fetch_cps_retention.py. Do not edit by hand.\n")
         fh.write("// Source: %s.\n" % payload["source"])

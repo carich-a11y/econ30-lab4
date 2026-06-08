@@ -79,9 +79,25 @@ month *m* to month *m+12* on the household and person identifiers (`HRHHID`,
   force (`PEMLR` 1–4), 12 months later.
 - **Groups**: sex × young child (own child under 6, `PRCHLD`) × telework status;
   ages 18–50; weighted by the baseline final person weight `PWSSWGT`.
+- **Occupation breakdown**: retention is also tallied by the baseline job's broad
+  occupation group (`PRDTOCC1`, 23 SOC groups; group 3 "Computer and
+  mathematical" contains software developers, `PEIO1OCD` 1021), remote vs
+  on-site, across all workers.
 - **Window**: 10 baseline months, June 2024–April 2025 (October 2024 skipped
   because the October 2025 follow-up file is not published), matched to
   June 2025–April 2026.
+
+### Significance test
+
+For the occupation breakdown the script flags whether each group's remote-vs-
+on-site retention difference is statistically significant with a two-sided
+pooled two-proportion z-test (`two_proportion_p`, p-value via `math.erf`, no
+dependencies) on the **unweighted** matched counts, at p < 0.05. Retention rates
+shown are weighted; the test is unweighted and design-agnostic, so it ignores
+the CPS complex survey design and tests many groups at once — treat the p-values
+as approximate. (For software developers specifically, the single 4-digit
+occupation cell is too small to test; the "Computer and mathematical" group is
+the SWE-containing grouping that is actually powered.)
 
 Output is written to [`../website/data/retention.js`](../website/data/retention.js)
 as a `window.RETENTION_DATA` global. Only the computed summary ships; raw

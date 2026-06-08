@@ -348,6 +348,28 @@
         </div>
       </div>
 
+      <div class="finding__occ">
+        <h3 class="finding__subhead">Does the retention boost depend on the job?</h3>
+        <p>
+          The same 12-month panel, split by the broad occupation group of the baseline job (all workers, remote vs on-site). A <strong>*</strong> marks a difference that is statistically significant at p &lt; 0.05. Notably, software-developer-type work falls in <strong>Computer and mathematical</strong>, where retention is already near the ceiling in both groups, so the remote advantage there is small and not significant; the clear, significant remote retention gains show up in lower-retention groups.
+        </p>
+        <div class="retention-table" role="table" aria-label="12-month retention by occupation, remote vs on-site">
+          <div class="retention-row retention-row--head" role="row">
+            <span role="columnheader">Occupation group (baseline job)</span>
+            <span role="columnheader">Teleworked</span>
+            <span role="columnheader">On-site</span>
+            <span role="columnheader">Gap</span>
+          </div>
+          <div data-out="occRows"></div>
+        </div>
+        <p class="finding__legend" data-out="occLegend">
+          <strong>*</strong> significant at p &lt; 0.05 (two-proportion test). Each cell shows the weighted share still employed 12 months later; numbers in parentheses are matched workers.
+        </p>
+        <p class="finding__caveat finding__caveat--occ">
+          <strong>Read with care.</strong> The significance test is a simple two-proportion z-test on unweighted matched counts: it ignores the CPS complex survey design and tests many groups at once, so a stray "significant" result is possible by chance. Groups with too few teleworkers to compare (under 100 matched) are omitted.
+        </p>
+      </div>
+
       <p class="finding__claim">
         <strong>The argument.</strong> On the outcome this project defines as "better"—staying attached to paid work—the evidence points one way: among comparable workers, mothers of young children who work from home are more likely to keep their jobs a year later than mothers who do not, and the boost they get is larger than fathers'. The "remote work keeps mothers employed" story dominates the "remote work pushes mothers out" story <em>on retention</em>. That is consistent with the literature's split verdict: flexibility tends to protect employment even where it dents promotion (Bloom et al. 2015; Emanuel &amp; Harrington 2023/24). The motherhood penalty does not vanish—it narrows on the margin remote work touches most.
       </p>
