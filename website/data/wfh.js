@@ -7,42 +7,75 @@ window.WFH_DATA = {
   "definitions": {
     "kids": "Lives in a household with an own child under age 6 (HUPAC 1 or 2).",
     "ba": "Bachelor's degree or higher (SCHL 21 or above).",
+    "married": "Currently married (MAR = 1); unmarried is not currently married (MAR 2-5: widowed, divorced, separated, never married).",
     "universe": "Employed, at work in the reference week (ESR = 1), with a reported commute mode, in a remote-capable occupation.",
     "teleworkable": "Occupation in a predominantly teleworkable major group, following Dingel & Neiman (2020)."
   },
   "cells": {
-    "men|kids|ba": {
-      "share": 25.4,
-      "nUnweighted": 68241
+    "men|kids|ba|married": {
+      "share": 25.9,
+      "nUnweighted": 61754
     },
-    "men|kids|noba": {
-      "share": 14.8,
-      "nUnweighted": 35604
+    "men|kids|ba|unmarried": {
+      "share": 21.6,
+      "nUnweighted": 6487
     },
-    "men|nokids|ba": {
-      "share": 25.5,
-      "nUnweighted": 150785
+    "men|kids|noba|married": {
+      "share": 16.5,
+      "nUnweighted": 25422
     },
-    "men|nokids|noba": {
-      "share": 15.7,
-      "nUnweighted": 92221
+    "men|kids|noba|unmarried": {
+      "share": 11.0,
+      "nUnweighted": 10182
     },
-    "women|kids|ba": {
-      "share": 24.6,
-      "nUnweighted": 74908
+    "men|nokids|ba|married": {
+      "share": 26.7,
+      "nUnweighted": 89442
     },
-    "women|kids|noba": {
-      "share": 16.7,
-      "nUnweighted": 51579
+    "men|nokids|ba|unmarried": {
+      "share": 24.1,
+      "nUnweighted": 61343
     },
-    "women|nokids|ba": {
-      "share": 24.5,
-      "nUnweighted": 160392
+    "men|nokids|noba|married": {
+      "share": 16.9,
+      "nUnweighted": 49016
     },
-    "women|nokids|noba": {
-      "share": 17.0,
-      "nUnweighted": 128943
+    "men|nokids|noba|unmarried": {
+      "share": 14.7,
+      "nUnweighted": 43205
+    },
+    "women|kids|ba|married": {
+      "share": 25.8,
+      "nUnweighted": 60127
+    },
+    "women|kids|ba|unmarried": {
+      "share": 20.5,
+      "nUnweighted": 14781
+    },
+    "women|kids|noba|married": {
+      "share": 18.6,
+      "nUnweighted": 28658
+    },
+    "women|kids|noba|unmarried": {
+      "share": 14.6,
+      "nUnweighted": 22921
+    },
+    "women|nokids|ba|married": {
+      "share": 25.7,
+      "nUnweighted": 83974
+    },
+    "women|nokids|ba|unmarried": {
+      "share": 23.4,
+      "nUnweighted": 76418
+    },
+    "women|nokids|noba|married": {
+      "share": 18.6,
+      "nUnweighted": 65255
+    },
+    "women|nokids|noba|unmarried": {
+      "share": 15.6,
+      "nUnweighted": 63688
     }
   },
-  "generatedAt": "2026-06-01"
+  "generatedAt": "2026-06-07"
 };

@@ -97,15 +97,27 @@ def make_ssl_context():
 SSL_CONTEXT = make_ssl_context()
 
 
-def download(url, dest):
-    req = urllib.request.Request(url, headers={"User-Agent": "econ30-capstone"})
-    with urllib.request.urlopen(req, timeout=300, context=SSL_CONTEXT) as resp:
-        with open(dest, "wb") as fh:
-            while True:
-                chunk = resp.read(1 << 20)
-                if not chunk:
-                    break
-                fh.write(chunk)
+def download(url, dest, attempts=4):
+    last = None
+    for _ in range(attempts):
+        try:
+            req = urllib.request.Request(
+                url, headers={"User-Agent": "econ30-capstone"})
+            with urllib.request.urlopen(req, timeout=300,
+                                        context=SSL_CONTEXT) as resp:
+                with open(dest, "wb") as fh:
+                    while True:
+                        chunk = resp.read(1 << 20)
+                        if not chunk:
+                            break
+                        fh.write(chunk)
+            if dest.endswith(".zip") and not zipfile.is_zipfile(dest):
+                raise RuntimeError("downloaded file is not a valid zip")
+            return
+        except (urllib.error.URLError, TimeoutError, ConnectionError,
+                RuntimeError) as exc:
+            last = exc
+    raise RuntimeError("Download failed for %s: %s" % (url, last))
 
 
 def open_csv_from_zip(zip_path):
@@ -139,11 +151,12 @@ def pick_year():
     raise RuntimeError("No ACS 1-year PUMS CSV year available.")
 
 
-def cell_key(sex, kids, ba):
-    return "%s|%s|%s" % (
+def cell_key(sex, kids, ba, married):
+    return "%s|%s|%s|%s" % (
         "women" if sex == 2 else "men",
         "kids" if kids else "nokids",
         "ba" if ba else "noba",
+        "married" if married else "unmarried",
     )
 
 
@@ -181,8 +194,9 @@ def process_state(year, abbr, cells, tmpdir):
         sex = to_int(row[pi["SEX"]])
         schl = to_int(row[pi["SCHL"]])
         ba = schl is not None and schl >= 21
+        married = to_int(row[pi["MAR"]]) == 1  # MAR 1 = married; 2-5 = not married
         kids = young_kids.get(row[pi["SERIALNO"]], False)
-        key = cell_key(sex, kids, ba)
+        key = cell_key(sex, kids, ba, married)
         entry = cells.setdefault(key, {"num": 0, "den": 0, "n": 0})
         entry["den"] += weight
         entry["n"] += 1
@@ -218,6 +232,7 @@ def main():
         "definitions": {
             "kids": "Lives in a household with an own child under age 6 (HUPAC 1 or 2).",
             "ba": "Bachelor's degree or higher (SCHL 21 or above).",
+            "married": "Currently married (MAR = 1); unmarried is not currently married (MAR 2-5: widowed, divorced, separated, never married).",
             "universe": "Employed, at work in the reference week (ESR = 1), with a reported commute mode, in a remote-capable occupation.",
             "teleworkable": "Occupation in a predominantly teleworkable major group, following Dingel & Neiman (2020).",
         },

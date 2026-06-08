@@ -18,14 +18,22 @@ document.documentElement.classList.add("js-ready");
   var FALLBACK = {
     year: 2023,
     cells: {
-      "women|kids|ba": { share: 24.6, nUnweighted: 74908 },
-      "women|kids|noba": { share: 16.7, nUnweighted: 51579 },
-      "women|nokids|ba": { share: 24.5, nUnweighted: 160392 },
-      "women|nokids|noba": { share: 17.0, nUnweighted: 128943 },
-      "men|kids|ba": { share: 25.4, nUnweighted: 68241 },
-      "men|kids|noba": { share: 14.8, nUnweighted: 35604 },
-      "men|nokids|ba": { share: 25.5, nUnweighted: 150785 },
-      "men|nokids|noba": { share: 15.7, nUnweighted: 92221 }
+      "women|kids|ba|married": { share: 25.8, nUnweighted: 60127 },
+      "women|kids|ba|unmarried": { share: 20.5, nUnweighted: 14781 },
+      "women|kids|noba|married": { share: 18.6, nUnweighted: 28658 },
+      "women|kids|noba|unmarried": { share: 14.6, nUnweighted: 22921 },
+      "women|nokids|ba|married": { share: 25.7, nUnweighted: 83974 },
+      "women|nokids|ba|unmarried": { share: 23.4, nUnweighted: 76418 },
+      "women|nokids|noba|married": { share: 18.6, nUnweighted: 65255 },
+      "women|nokids|noba|unmarried": { share: 15.6, nUnweighted: 63688 },
+      "men|kids|ba|married": { share: 25.9, nUnweighted: 61754 },
+      "men|kids|ba|unmarried": { share: 21.6, nUnweighted: 6487 },
+      "men|kids|noba|married": { share: 16.5, nUnweighted: 25422 },
+      "men|kids|noba|unmarried": { share: 11.0, nUnweighted: 10182 },
+      "men|nokids|ba|married": { share: 26.7, nUnweighted: 89442 },
+      "men|nokids|ba|unmarried": { share: 24.1, nUnweighted: 61343 },
+      "men|nokids|noba|married": { share: 16.9, nUnweighted: 49016 },
+      "men|nokids|noba|unmarried": { share: 14.7, nUnweighted: 43205 }
     }
   };
 
@@ -35,11 +43,12 @@ document.documentElement.classList.add("js-ready");
   var state = {
     sex: "women",
     kids: "kids",
-    edu: "ba"
+    edu: "ba",
+    marital: "married"
   };
 
   function key(s) {
-    return s.sex + "|" + s.kids + "|" + s.edu;
+    return s.sex + "|" + s.kids + "|" + s.edu + "|" + s.marital;
   }
 
   function cell(s) {
@@ -48,6 +57,18 @@ document.documentElement.classList.add("js-ready");
 
   function oppositeSex(sex) {
     return sex === "women" ? "men" : "women";
+  }
+
+  function oppositeMarital(marital) {
+    return marital === "married" ? "unmarried" : "married";
+  }
+
+  function maritalLabel(marital) {
+    return marital === "married" ? "married" : "unmarried";
+  }
+
+  function capitalize(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
   function formatGap(value) {
@@ -75,8 +96,8 @@ document.documentElement.classList.add("js-ready");
     return edu === "ba" ? "with bachelor's or higher" : "with less than bachelor's";
   }
 
-  function getShare(sex, kids, edu) {
-    return cell({ sex: sex, kids: kids, edu: edu }).share;
+  function getShare(sex, kids, edu, marital) {
+    return cell({ sex: sex, kids: kids, edu: edu, marital: marital }).share;
   }
 
   function buildVerdict(s, share, gap) {
@@ -119,12 +140,14 @@ document.documentElement.classList.add("js-ready");
     var c = cell(state);
     var share = c.share;
 
-    var oppState = { sex: oppositeSex(state.sex), kids: state.kids, edu: state.edu };
+    var oppState = { sex: oppositeSex(state.sex), kids: state.kids, edu: state.edu, marital: state.marital };
     var gap = share - cell(oppState).share;
-    var childState = { sex: state.sex, kids: state.kids === "kids" ? "nokids" : "kids", edu: state.edu };
+    var childState = { sex: state.sex, kids: state.kids === "kids" ? "nokids" : "kids", edu: state.edu, marital: state.marital };
     var childGap = share - cell(childState).share;
-    var eduState = { sex: state.sex, kids: state.kids, edu: state.edu === "ba" ? "noba" : "ba" };
+    var eduState = { sex: state.sex, kids: state.kids, edu: state.edu === "ba" ? "noba" : "ba", marital: state.marital };
     var eduGap = share - cell(eduState).share;
+    var maritalState = { sex: state.sex, kids: state.kids, edu: state.edu, marital: oppositeMarital(state.marital) };
+    var maritalGap = share - cell(maritalState).share;
     var genderGap = gap;
 
     var year = (window.WFH_DATA && window.WFH_DATA.year) || FALLBACK.year;
@@ -148,7 +171,9 @@ document.documentElement.classList.add("js-ready");
     setText("childCompare", formatGap(childGap));
     setText("eduCompareLabel", sexLabel(state.sex) + " " + childLabel(state.kids) + " " + eduLabel(eduState.edu));
     setText("eduCompare", formatGap(eduGap));
-    setText("comparisonInsight", buildComparisonInsight(state, genderGap, childGap, eduGap));
+    setText("maritalCompareLabel", capitalize(maritalLabel(maritalState.marital)) + " " + sexLabel(state.sex) + ", same group");
+    setText("maritalCompare", formatGap(maritalGap));
+    setText("comparisonInsight", buildComparisonInsight(state, genderGap, childGap, eduGap, maritalGap));
     setText("verdict", buildVerdict(state, share, gap));
 
     var sample = "Based on " + numberWithCommas(c.nUnweighted) + " surveyed workers, ACS " + year + ".";
@@ -158,9 +183,14 @@ document.documentElement.classList.add("js-ready");
     setText("sample", sample);
   }
 
-  function buildComparisonInsight(s, genderGap, childGap, eduGap) {
+  function buildComparisonInsight(s, genderGap, childGap, eduGap, maritalGap) {
     var prefix = "Among workers in remote-capable jobs, ";
-    var largest = Math.max(Math.abs(genderGap), Math.abs(childGap), Math.abs(eduGap));
+    var largest = Math.max(Math.abs(genderGap), Math.abs(childGap), Math.abs(eduGap), Math.abs(maritalGap));
+    if (largest === Math.abs(maritalGap)) {
+      var here = maritalLabel(s.marital);
+      var other = maritalLabel(oppositeMarital(s.marital));
+      return prefix + "marital status stands out: " + here + " " + sexLabel(s.sex) + " in this group differ from otherwise similar " + other + " " + sexLabel(s.sex) + " by " + formatGap(maritalGap) + " in working from home.";
+    }
     if (largest === Math.abs(eduGap)) {
       if (s.edu === "ba") {
         return prefix + "the biggest gap here is still education: college-educated workers in this family situation are " + absGap(eduGap) + " points more likely to work from home than otherwise similar workers without a bachelor's degree.";

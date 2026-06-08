@@ -47,10 +47,14 @@ The script automatically uses the latest available ACS 1-year year (currently
   CSV downloads instead.
 - Definitions: "worked from home" is the ACS commute-mode response (`JWTRNS`);
   "young child" is a household with an own child under 6 (`HUPAC` 1 or 2);
-  "bachelor's or higher" is `SCHL` 21+; "remote-capable" is an `OCCP` in a
+  "bachelor's or higher" is `SCHL` 21+; "married" is currently married
+  (`MAR` = 1) and "unmarried" is not currently married (`MAR` 2-5: widowed,
+  divorced, separated, never married); "remote-capable" is an `OCCP` in a
   predominantly teleworkable major group (Dingel & Neiman 2020); the universe is
   people employed and at work in the reference week (`ESR` = 1) with a reported
   commute mode in a remote-capable occupation.
+- The calculator breaks the share out by sex x young child x education x marital
+  status (16 cells).
 
 ## `fetch_cps_retention.py` — 12-month job-retention panel
 
