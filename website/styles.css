@@ -993,6 +993,122 @@ blockquote {
   text-align: center;
 }
 
+.site-footer a {
+  color: var(--accent);
+}
+
+/* Reading-list document page */
+.doc-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1.5rem 0 0;
+  border-bottom: 2px solid var(--line);
+  background: var(--paper-warm);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.doc-topline a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.doc {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 5rem) 1.25rem 4rem;
+}
+
+.doc-head {
+  margin-bottom: 2.5rem;
+}
+
+.doc-head h1 {
+  margin: 0.4rem 0 0.8rem;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.doc-lead {
+  max-width: 40rem;
+  font-family: var(--mono);
+  font-size: 1.02rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.doc-framing {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  border-left: 3px solid var(--accent-2);
+  background: var(--panel);
+}
+
+.doc-framing p {
+  margin: 0 0 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.96rem;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.doc-framing p:last-child {
+  margin-bottom: 0;
+}
+
+.doc-framing strong {
+  color: var(--accent-2);
+}
+
+.doc-section {
+  margin-bottom: 2.5rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--line);
+}
+
+.doc-section h2 {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: none;
+}
+
+.doc-section > p {
+  max-width: 42rem;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+  color: var(--muted);
+}
+
+.doc-section ul,
+.doc-section ol {
+  margin: 1.2rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.doc-section li {
+  margin-bottom: 1rem;
+  font-size: 1.04rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.doc-section li em {
+  color: var(--muted);
+}
+
 .site-footer p {
   margin: 0;
   font-size: 0.9rem;
